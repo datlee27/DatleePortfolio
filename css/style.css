@@ -1,0 +1,333 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    background: #111;
+    transition: background 0.3s, color 0.3s;
+    overflow-x: hidden;
+}
+
+header.navbar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(20, 20, 20, 0.95);
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 0.5rem 0;
+}
+
+header .brand {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #00ffcc;
+    font-family: 'Press Start 2P', cursive;
+}
+
+header ul.nav {
+    gap: 0.5rem;
+}
+
+header .nav-link {
+    color: #d3d3d3;
+    font-weight: 500;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+header .nav-link:hover {
+    color: #00ffcc;
+    text-decoration: underline;
+}
+
+header #modeToggle {
+    padding: 7px 20px;
+    background: linear-gradient(90deg,#00ffcc,#0077ff);
+    border: none;
+    border-radius: 6px;
+    color: #222;
+    font-weight: 700;
+    margin-left: 1rem;
+    box-shadow: 0 2px 8px rgba(0,255,204,0.15);
+    transition: background 0.2s, color 0.2s;
+}
+
+header #modeToggle:hover {
+    background: linear-gradient(90deg,#0077ff,#00ffcc);
+    color: #fff;
+}
+
+.home_section, .about_section, .projects_section, .contact_section {
+    min-height: 100vh;
+    padding: 60px 20px 40px 20px;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.home_section.visible, .about_section.visible, .projects_section.visible, .contact_section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 70vh;
+    position: relative;
+    z-index: 1;
+}
+
+.sub_hero_text {
+    font-size: 1.2rem;
+    color: #b0b0b0;
+    max-width: 500px;
+    margin: 0 auto 24px auto;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.hero_text {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #00ffcc;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    margin-bottom: 32px;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px 0 #222;
+}
+
+.profile-img {
+    border-radius: 50%;
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border: 5px solid #00ffcc;
+    box-shadow: 0 4px 24px rgba(0,255,204,0.12);
+    margin-top: 32px;
+}
+
+.about_section, .projects_section, .contact_section {
+    background: #181818;
+    color: #e0e0e0;
+    border-radius: 16px;
+    box-shadow: 0 2px 24px rgba(0,255,204,0.05);
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.about_section h2, .projects_section h2, .contact_section h2 {
+    font-size: 2.2rem;
+    color: #00ffcc;
+    margin-bottom: 18px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.about_section p, .projects_section p, .contact_section p {
+    font-size: 1.1rem;
+    color: #b0b0b0;
+    max-width: 700px;
+    margin: 0 auto 18px auto;
+}
+
+footer {
+    background: #1a1a1a;
+    text-align: center;
+    padding: 18px 0;
+    color: #00ffcc;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    border-top: 2px solid #00ffcc;
+    margin-top: 32px;
+}
+
+/* Mode 1: Minimalist Design */
+body.mode-1 {
+    background-color: #000;
+}
+
+body.mode-1 header .brand {
+    color: #00ffcc;
+}
+
+body.mode-1 .hero_text {
+    color: #fff;
+    text-shadow: 2px 2px #00ffcc;
+}
+
+body.mode-1 .about_section, body.mode-1 .projects_section, body.mode-1 .contact_section {
+    background: #1a1a1a;
+    color: #e0e0e0;
+}
+
+body.mode-1 footer {
+    background: #1a1a1a;
+    color: #00ffcc;
+}
+
+/* Mode 2: Cozy Pixel Art - Enhanced Design */
+body.mode-2 {
+    background: url('https://www.transparenttextures.com/patterns/pixel-weave.png'), linear-gradient(135deg, #2e1f4d 0%, #4b5e7a 100%);
+    background-repeat: repeat, no-repeat;
+    background-size: auto, cover;
+}
+
+body.mode-2 header.navbar {
+    background: rgba(68, 44, 92, 0.95);
+    border-bottom: 4px solid #ff6f61;
+    box-shadow: 0 4px 16px rgba(255,111,97,0.12);
+}
+
+body.mode-2 header .brand {
+    color: #ff6f61;
+    text-shadow: 2px 2px #fff, 0 0 8px #ff6f61;
+    font-family: 'Press Start 2P', cursive;
+    letter-spacing: 3px;
+    font-size: 2rem;
+}
+
+body.mode-2 header .nav-link {
+    color: #ffe4b5;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1rem;
+    text-shadow: 1px 1px #000;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-bottom 0.2s;
+}
+
+body.mode-2 header .nav-link:hover {
+    color: #ff6f61;
+    border-bottom: 2px solid #ff6f61;
+    background: rgba(255,111,97,0.08);
+    border-radius: 4px;
+}
+
+body.mode-2 header #modeToggle {
+    background: linear-gradient(90deg,#ff6f61,#ffe4b5);
+    color: #2e1f4d;
+    font-family: 'Press Start 2P', cursive;
+    border: 2px solid #ff6f61;
+    box-shadow: 0 2px 8px rgba(255,111,97,0.15);
+}
+
+body.mode-2 header #modeToggle:hover {
+    background: linear-gradient(90deg,#ffe4b5,#ff6f61);
+    color: #ff6f61;
+}
+
+body.mode-2 .home_section {
+    background: linear-gradient(120deg, #4b5e7a 60%, #ff6f61 100%);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(255,111,97,0.12);
+    border: 4px solid #ffe4b5;
+}
+
+body.mode-2 .hero_text {
+    color: #ffe4b5;
+    text-shadow: 3px 3px #ff6f61, 0 0 12px #ffe4b5;
+    -webkit-text-stroke: 2px #ff6f61;
+    font-size: 5rem;
+    font-family: 'Press Start 2P', cursive;
+}
+
+body.mode-2 .sub_hero_text {
+    color: #ffe4b5;
+    text-shadow: 1px 1px #ff6f61;
+    font-size: 1.2rem;
+    margin-bottom: 18px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+body.mode-2 .profile-img {
+    border: 6px solid #ffe4b5;
+    box-shadow: 0 0 24px #ff6f61;
+    background: #fff8e7;
+}
+
+body.mode-2 .about_section, 
+body.mode-2 .projects_section, 
+body.mode-2 .contact_section {
+    background: rgba(68, 44, 92, 0.92);
+    color: #ffe4b5;
+    text-shadow: 1px 1px #ff6f61;
+    border-radius: 16px;
+    border: 3px dashed #ff6f61;
+    box-shadow: 0 4px 24px rgba(255,111,97,0.10);
+}
+
+body.mode-2 .about_section h2, 
+body.mode-2 .projects_section h2, 
+body.mode-2 .contact_section h2 {
+    color: #ff6f61;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 2px 2px #ffe4b5;
+}
+
+body.mode-2 .about_section p, 
+body.mode-2 .projects_section p, 
+body.mode-2 .contact_section p {
+    color: #ffe4b5;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 1px 1px #4b5e7a;
+}
+
+body.mode-2 footer {
+    background: rgba(68, 44, 92, 0.98);
+    color: #ffe4b5;
+    border-top: 4px solid #ff6f61;
+    font-family: 'Press Start 2P', cursive;
+    text-shadow: 1px 1px #ff6f61;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .hero_text {
+        font-size: 2.5rem;
+    }
+    .profile-img {
+        width: 120px;
+        height: 120px;
+    }
+    .about_section, .projects_section, .contact_section {
+        padding: 30px 10px;
+    }
+}
+
+@media (max-width: 600px) {
+    header.navbar {
+        flex-direction: column;
+        padding: 0.5rem 0.5rem;
+    }
+    header .brand {
+        font-size: 1.2rem;
+        margin-bottom: 8px;
+    }
+    header ul.nav {
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+    .hero_text {
+        font-size: 1.5rem;
+    }
+    .profile-img {
+        width: 80px;
+        height: 80px;
+    }
+    .about_section, .projects_section, .contact_section {
+        padding: 18px 5px;
+    }
+}

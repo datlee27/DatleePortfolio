@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        /* Debug: Ensure sections are visible */
+        .home_section,
+        .about_section,
+        .projects_section,
+        .contact_section {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        .transition-section {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        .transition-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="home_section">
+        <header class="navbar row container-fluid align-items-center justify-content-between">
+            <div class="col-md-6 text-start">
+                <span class="brand px-5" style="font-size: 30px; font-weight: 800;">Datdoc</span>
+            </div>
+            <div class="col-md-6 py-2 d-flex align-items-center">
+                <ul class="nav flex-row justify-content-end w-100">
+                    <li class="nav-item"><a class="nav-link px-2" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#">About</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#">Projects</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#">Services</a></li>
+                    <li class="nav-item"><a class="nav-link px-2" href="#">Contact</a></li>
+                </ul>
+                <button id="modeToggle" class="btn btn-secondary ms-3">Toggle Mode</button>
+            </div>
+        </header>
+        
+        <div class="hero-content text-center">
+            <p class="sub_hero_text">Step into the boundless realm of the digital landscape, where the fusion of web development prowess and graphic design ingenuity crafts immersive online journeys.</p>
+            <h1 class="hero_text">Website<br>Developer</h1>
+            <img src="assets/img/profile.PNG" alt="Profile" class="profile-img">
+        </div>
+    </div>
+
+    <div class="about_section">
+        <h2>About Me</h2>
+        <p>With an unwavering dedication to innovation and a penchant for redefining norms, I seamlessly blend technical acumen with creative flair, infusing each project with a distinctive touch that captivates and inspires.</p>
+    </div>
+
+    <div class="projects_section">
+        <h2>Projects</h2>
+        <p>Explore my latest projects.</p>
+    </div>
+
+    <div class="contact_section">
+        <h2>Contact</h2>
+        <p>Get in touch with me.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 My Portfolio</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const modeToggle = document.getElementById('modeToggle');
+        let isMode1 = true;
+
+        modeToggle.addEventListener('click', () => {
+            isMode1 = !isMode1;
+            document.body.classList.toggle('mode-1', isMode1);
+            document.body.classList.toggle('mode-2', !isMode1);
+        });
+
+        let autoScrolled = false;
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section, .home_section, footer');
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top >= 0 && rect.top < window.innerHeight) {
+                    section.classList.add('visible');
+                }
+            });
+
+            if (!autoScrolled && window.scrollY > 10) {
+                const nextSection = document.querySelector('.about_section');
+                if (nextSection) {
+                    nextSection.scrollIntoView({ behavior: 'smooth' });
+                    autoScrolled = true;
+                }
+            }
+        });
+
+        document.querySelectorAll('.about_section, .projects_section, .contact_section').forEach(section => {
+            section.classList.add('transition-section');
+        });
+    </script>
+</body>
+</html>
