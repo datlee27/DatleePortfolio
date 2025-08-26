@@ -8,103 +8,466 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        /* Debug: Ensure sections are visible */
-        .home_section,
-        .about_section,
-        .projects_section,
-        .contact_section {
-            display: block !important;
-            visibility: visible !important;
-            opacity: 1 !important;
+        body.mode-1 {
+            background: #111;
+            color: #fff;
+            font-family: 'Press Start 2P', Arial, sans-serif;
         }
-        .transition-section {
+        body.mode-2 {
+            background: #f8f9fa;
+            color: #222;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background: rgba(20,20,20,0.95);
+            border-bottom: 1px solid #333;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+            padding: 0.5rem 0;
+        }
+        .brand {
+            font-size: 32px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #00e6e6;
+            font-family: 'Press Start 2P', Arial, sans-serif;
+        }
+        .nav {
+            flex-direction: row !important;
+            gap: 0.5rem;
+        }
+        .nav-link {
+            color: inherit !important;
+            font-weight: 600;
+            font-size: 15px;
+            padding: 0.25rem 0.7rem !important;
+            position: relative;
+            transition: color 0.3s;
+        }
+        .nav-link::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #00e6e6;
+            transition: width 0.3s;
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+        }
+        .nav-link:hover {
+            color: #00e6e6 !important;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: #00e6e6 !important;
+            text-shadow: 0 0 6px #00e6e6;
+        }
+        .section {
+            min-height: 100vh; /* Đảm bảo mỗi section luôn chiếm đủ chiều cao màn hình */
+            padding: 32px 0 24px 0;
+            margin-top: 0 !important; /* Không còn khoảng trống phía trên khi lướt lên */
             opacity: 0;
             transform: translateY(40px);
-            transition: opacity 0.6s, transform 0.6s;
+            transition: opacity 0.8s cubic-bezier(.77,0,.18,1), transform 0.8s cubic-bezier(.77,0,.18,1);
+            scroll-margin-top: 100px; /* Ensure section is not hidden under navbar */
         }
-        .transition-section.visible {
+        .section.visible {
             opacity: 1;
             transform: translateY(0);
         }
+        .section-content {
+            background: transparent; /* Liên kết với background */
+            border-radius: 0;
+            box-shadow: none;
+            padding: 40px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            letter-spacing: 2px;
+            color: #00e6e6;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 32px;
+            justify-items: center;
+            align-items: center;
+            margin-top: 32px;
+        }
+        @media (max-width: 992px) {
+            .skills-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .skills-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+            }
+        }
+        .skill-card {
+            background: rgba(40,40,40,0.95); /* Màu nền như ban đầu */
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            border: 1px solid #222;
+            padding: 24px 12px;
+            min-height: 140px;
+            width: 100%;
+            max-width: 210px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        .skill-card:hover {
+            transform: translateY(-8px) scale(1.07);
+            box-shadow: 0 6px 24px #00e6e6a0;
+            border-color: #00e6e6;
+        }
+        .skill-card img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+            object-fit: contain;
+        }
+        .skill-card div {
+            font-size: 1.1rem;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 0;
+        }
+        .project-card {
+            background: rgba(40,40,40,0.95);
+            border-radius: 16px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            border: 1px solid #222;
+            padding: 16px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.04);
+            box-shadow: 0 6px 24px #00e6e6a0;
+            border-color: #00e6e6;
+        }
+        .project-card img {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        }
+        .mode-btn {
+            background: #222;
+            color: #fff;
+            border-radius: 8px;
+            border: none;
+            padding: 8px 18px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        .mode-btn:hover {
+            background: #00e6e6;
+            color: #222;
+        }
+        footer {
+            background: transparent;
+            text-align: center;
+            padding: 24px 0 12px 0;
+            font-size: 1rem;
+            color: #888;
+            border-top: 1px solid #222;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .section-content {
+                padding: 24px 8px;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .brand {
+                font-size: 22px;
+            }
+        }
+        .profile-navbar-img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-left: 12px;
+            border: 2px solid #00e6e6;
+            box-shadow: 0 2px 8px #0004;
+        }
+        .about-text {
+            font-family: Arial, sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #fff;
+            text-align: left;
+            font-weight: 400;
+            max-width: 420px;
+            margin: 0;
+            position: absolute;
+            left: 5vw;
+            top: 12vh;
+        }
+        .about-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 5vw;
+            line-height: 1.05;
+            color: #fff;
+            text-align: right;
+            letter-spacing: 2px;
+            font-weight: 900;
+            margin: 0;
+            position: absolute;
+            right: 5vw;
+            bottom: 8vh;
+            width: auto;
+            white-space: pre-line;
+            text-shadow: 0 2px 16px #000, 0 0 0 #00e6e6;
+            overflow: hidden;
+            animation: neon-flicker 2.5s infinite;
+        }
+        @keyframes neon-flicker {
+            0%, 100% { color: #00e6e6; text-shadow: 0 0 8px #00e6e6, 0 2px 16px #000; }
+            10% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
+            20% { color: #00e6e6; text-shadow: 0 0 16px #00e6e6, 0 2px 16px #000; }
+            30% { color: #fff; text-shadow: 0 0 4px #00e6e6, 0 2px 16px #000; }
+            40% { color: #00e6e6; text-shadow: 0 0 12px #00e6e6, 0 2px 16px #000; }
+            50% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
+            60% { color: #00e6e6; text-shadow: 0 0 20px #00e6e6, 0 2px 16px #000; }
+            70% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
+            80% { color: #00e6e6; text-shadow: 0 0 10px #00e6e6, 0 2px 16px #000; }
+            90% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
+        }
     </style>
 </head>
-<body>
-    <div class="home_section">
-        <header class="navbar row container-fluid align-items-center justify-content-between">
-            <div class="col-md-6 text-start">
-                <span class="brand px-5" style="font-size: 30px; font-weight: 800;">Datdoc</span>
-            </div>
-            <div class="col-md-6 py-2 d-flex align-items-center">
-                <ul class="nav flex-row justify-content-end w-100">
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">About</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Projects</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Services</a></li>
-                    <li class="nav-item"><a class="nav-link px-2" href="#">Contact</a></li>
-                </ul>
-                <button id="modeToggle" class="btn btn-secondary ms-3">Toggle Mode</button>
-            </div>
-        </header>
-        
-        <div class="hero-content text-center">
-            <p class="sub_hero_text">Step into the boundless realm of the digital landscape, where the fusion of web development prowess and graphic design ingenuity crafts immersive online journeys.</p>
-            <h1 class="hero_text">Website<br>Developer</h1>
-            <img src="assets/img/profile.PNG" alt="Profile" class="profile-img">
+<body class="mode-1">
+    <!-- Header -->
+    <header class="navbar row container-fluid align-items-center justify-content-between py-2">
+        <div class="col-auto d-flex align-items-center">
+            <span class="brand px-3">Datdoc</span>
+            <img src="assets/img/profile.PNG" alt="Profile" class="profile-navbar-img" />
         </div>
-    </div>
+        <div class="col-auto d-flex align-items-center">
+            <ul class="nav flex-row justify-content-end align-items-center mb-0">
+                <li class="nav-item"><a class="nav-link px-2" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link px-2" href="#skills">Skills</a></li>
+                <li class="nav-item"><a class="nav-link px-2" href="#experience">Experience</a></li>
+                <li class="nav-item"><a class="nav-link px-2" href="#education">Education</a></li>
+                <li class="nav-item"><a class="nav-link px-2" href="#projects">Projects</a></li>
+            </ul>
+        </div>
+    </header>
 
-    <div class="about_section">
-        <h2>About Me</h2>
-        <p>With an unwavering dedication to innovation and a penchant for redefining norms, I seamlessly blend technical acumen with creative flair, infusing each project with a distinctive touch that captivates and inspires.</p>
-    </div>
+    <!-- About Me -->
+    <section id="about" class="section" style="margin-top:0 !important;">
+        <div class="section-content container-fluid position-relative d-flex align-items-center" style="height: 80vh; min-height: 400px;">
+            <div class="row w-100 h-100">
+                <div class="col-md-6 d-flex flex-column justify-content-center align-items-start h-100">
+                    <div class="about-text">
+                        Step into the boundless realm of the digital landscape, where the fusion of web development prowess and graphic design ingenuity crafts immersive online journeys. With an unwavering dedication to innovation and a penchant for redefining norms, I seamlessly blend technical acumen with creative flair, infusing each project with a distinctive touch that captivates and inspires.
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex flex-column justify-content-end align-items-end position-relative h-100">
+                    <div id="website-developer-animated" class="about-title">
+                        WEBSITE<br>DEVELOPER
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="projects_section">
-        <h2>Projects</h2>
-        <p>Explore my latest projects.</p>
-    </div>
+    <!-- My Skills -->
+    <section id="skills" class="section">
+        <div class="section-content container text-center">
+            <h2 class="section-title">My Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                    <div>HTML5</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                    <div>CSS3</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                    <div>JavaScript</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+                    <div>React</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+                    <div>Node.js</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
+                    <div>Git</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg" alt="Vite">
+                    <div>Vite</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript">
+                    <div>TypeScript</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                    <div>Java</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
+                    <div>MongoDB</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Server">
+                    <div>SQL Server</div>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/api/api-original.svg" alt="RESTful API">
+                    <div>RESTful API</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="contact_section">
-        <h2>Contact</h2>
-        <p>Get in touch with me.</p>
-    </div>
+    <!-- My Experience -->
+    <section id="experience" class="section">
+        <div class="section-content container text-center">
+            <h2 class="section-title">My Experience</h2>
+            <p>Web Developer at ABC Corp (2022-2024): Developed responsive web applications and collaborated with designers to deliver seamless user experiences.<br>
+            Graphic Designer at XYZ Studio (2021-2022): Created visual assets and branding materials for various clients.</p>
+        </div>
+    </section>
 
+    <!-- Education -->
+    <section id="education" class="section">
+        <div class="section-content container text-center">
+            <h2 class="section-title">Education</h2>
+            <p>Bachelor of Information Technology, University of Technology (2018-2022)<br>
+            Certified Frontend Developer, Udemy (2023)</p>
+        </div>
+    </section>
+
+    <!-- My Projects -->
+    <section id="projects" class="section">
+        <div class="section-content container text-center">
+            <h2 class="section-title">My Projects</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-4">
+                    <div class="project-card">
+                        <img src="assets/img/project1.jpg" alt="Project 1" style="width:100%;border-radius:12px;">
+                        <div class="mt-2">Project 01</div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="project-card">
+                        <img src="assets/img/project2.jpg" alt="Project 2" style="width:100%;border-radius:12px;">
+                        <div class="mt-2">Project 02</div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="project-card">
+                        <img src="assets/img/project3.jpg" alt="Project 3" style="width:100%;border-radius:12px;">
+                        <div class="mt-2">Project 03</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 My Portfolio</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const modeToggle = document.getElementById('modeToggle');
-        let isMode1 = true;
-
-        modeToggle.addEventListener('click', () => {
-            isMode1 = !isMode1;
-            document.body.classList.toggle('mode-1', isMode1);
-            document.body.classList.toggle('mode-2', !isMode1);
+        // Smooth scroll for nav links with offset for fixed navbar
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        const navbar = document.querySelector('.navbar');
+                        const navHeight = navbar ? navbar.offsetHeight : 0;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 6;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }
+                }
+            });
         });
 
-        let autoScrolled = false;
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('section, .home_section, footer');
-            sections.forEach(section => {
+        // Section reveal on scroll
+        function revealSections() {
+            document.querySelectorAll('.section').forEach(section => {
                 const rect = section.getBoundingClientRect();
-                if (rect.top >= 0 && rect.top < window.innerHeight) {
+                if (rect.top < window.innerHeight - 60) {
                     section.classList.add('visible');
                 }
             });
+        }
+        window.addEventListener('scroll', revealSections);
+        window.addEventListener('DOMContentLoaded', revealSections);
 
-            if (!autoScrolled && window.scrollY > 10) {
-                const nextSection = document.querySelector('.about_section');
-                if (nextSection) {
-                    nextSection.scrollIntoView({ behavior: 'smooth' });
-                    autoScrolled = true;
+        // Highlight active nav-link based on scroll position
+        function setActiveNav() {
+            const sections = document.querySelectorAll('.section');
+            let currentId = '';
+            const scrollY = window.scrollY + (document.querySelector('.navbar')?.offsetHeight || 0) + 10;
+            sections.forEach(section => {
+                if (section.offsetTop <= scrollY) {
+                    currentId = section.id;
                 }
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', setActiveNav);
+        window.addEventListener('DOMContentLoaded', setActiveNav);
+
+        // Scroll to About section on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            const aboutSection = document.getElementById('about');
+            if (aboutSection) {
+                const navbar = document.querySelector('.navbar');
+                const navHeight = navbar ? navbar.offsetHeight : 0;
+                const top = aboutSection.getBoundingClientRect().top + window.pageYOffset - navHeight - 6;
+                window.scrollTo({ top, behavior: 'auto' });
             }
+            revealSections();
+            setActiveNav();
         });
 
-        document.querySelectorAll('.about_section, .projects_section, .contact_section').forEach(section => {
-            section.classList.add('transition-section');
-        });
+        // Initial animation
+        setTimeout(() => {
+            revealSections();
+            setActiveNav();
+        }, 300);
     </script>
 </body>
 </html>
