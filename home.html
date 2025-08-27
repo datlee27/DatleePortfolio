@@ -90,12 +90,44 @@
             max-width: 900px;
             margin: 0 auto;
         }
+        .section-content1 {
+            background: transparent; /* Liên kết với background */
+            border-radius: 0;
+            box-shadow: none;
+            padding: 40px 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        /* Animated gradient background */
+        .animated-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            background: linear-gradient(120deg, #00e6e6 0%, #222 100%);
+            opacity: 0.18;
+            animation: gradientMove 12s ease-in-out infinite alternate;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
         .section-title {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 24px;
             letter-spacing: 2px;
             color: #00e6e6;
+            opacity: 1;
+        }
+        .section-title.animated-title {
+            animation: fadeInScale 1.2s cubic-bezier(.77,0,.18,1);
+        }
+        @keyframes fadeInScale {
+            0% { transform: scale(0.5) rotate(-8deg); opacity: 0; }
+            50% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+            70% { transform: scale(0.97) rotate(-2deg);}
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
         .skills-grid {
             display: grid;
@@ -119,7 +151,7 @@
         .skill-card {
             background: rgba(40,40,40,0.95); /* Màu nền như ban đầu */
             border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.12), 0 0 0 #00e6e6;
             border: 1px solid #222;
             padding: 24px 12px;
             min-height: 140px;
@@ -129,13 +161,34 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: box-shadow 0.3s, border-color 0.3s;
+            position: relative;
+            overflow: hidden;
             text-align: center;
+        }
+        .skill-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            border: 2px solid #00e6e6;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1;
+            animation: neonBorder 2.5s infinite;
         }
         .skill-card:hover {
             transform: translateY(-8px) scale(1.07);
             box-shadow: 0 6px 24px #00e6e6a0;
             border-color: #00e6e6;
+        }
+        .skill-card:hover::before {
+            opacity: 1;
+        }
+        @keyframes neonBorder {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.7; }
         }
         .skill-card img {
             width: 48px;
@@ -169,6 +222,20 @@
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.10);
         }
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatParticle 16s linear infinite;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(0) scale(1);}
+            50% { transform: translateY(-60px) scale(1.2);}
+            100% { transform: translateY(0) scale(1);}
+        }
         .mode-btn {
             background: #222;
             color: #fff;
@@ -176,7 +243,13 @@
             border: none;
             padding: 8px 18px;
             font-weight: 600;
-            transition: background 0.3s;
+            transition:0.3s;
+            animation: pulseBtn 2.2s infinite;
+        }
+        @keyframes pulseBtn {
+            0% { box-shadow: 0 0 0 0 #00e6e6; }
+            70% { box-shadow: 0 0 0 12px rgba(0,230,230,0); }
+            100% { box-shadow: 0 0 0 0 #00e6e6; }
         }
         .mode-btn:hover {
             background: #00e6e6;
@@ -212,17 +285,14 @@
             box-shadow: 0 2px 8px #0004;
         }
         .about-text {
-            font-family: Arial, sans-serif;
-            font-size: 1rem;
+            
+            font-size: 0.6rem;
             line-height: 1.7;
             color: #fff;
             text-align: left;
             font-weight: 400;
-            max-width: 420px;
             margin: 0;
-            position: absolute;
-            left: 5vw;
-            top: 12vh;
+            /* vị trí sẽ được override inline */
         }
         .about-title {
             font-family: 'Press Start 2P', monospace;
@@ -233,10 +303,7 @@
             letter-spacing: 2px;
             font-weight: 900;
             margin: 0;
-            position: absolute;
-            right: 5vw;
-            bottom: 8vh;
-            width: auto;
+            /* vị trí sẽ được override inline */
             white-space: pre-line;
             text-shadow: 0 2px 16px #000, 0 0 0 #00e6e6;
             overflow: hidden;
@@ -254,9 +321,267 @@
             80% { color: #00e6e6; text-shadow: 0 0 10px #00e6e6, 0 2px 16px #000; }
             90% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
         }
+        .timeline {
+    position: relative;
+    padding: 32px 0;
+    max-width: 600px;
+}
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 40px;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg, #00e6e6 0%, #222 100%);
+    border-radius: 3px;
+    box-shadow: 0 0 12px #00e6e6a0;
+}
+.timeline-item {
+    position: relative;
+    margin-bottom: 56px;
+    min-height: 80px;
+    display: flex;
+    align-items: flex-start;
+}
+.timeline-dot {
+    position: absolute;
+    left: 28px;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    background: #222;
+    border-radius: 50%;
+    border: 3px solid #00e6e6;
+    box-shadow: 0 2px 12px #00e6e6a0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+.timeline-icon img {
+    display: block;
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 0 2px #00e6e6);
+}
+.timeline-content {
+    margin-left: 80px;
+    background: linear-gradient(90deg, rgba(0,230,230,0.09) 0%, rgba(40,40,40,0.97) 100%);
+    border-radius: 16px;
+    padding: 22px 28px;
+    box-shadow: 0 4px 24px rgba(0,230,230,0.07);
+    color: #fff;
+    min-width: 220px;
+    position: relative;
+    transition: box-shadow 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 110px; /* Đảm bảo chiều cao bằng nhau */
+    width: 100%;       /* Đảm bảo các thẻ đều nhau */
+    box-sizing: border-box;
+}
+.timeline-content:hover {
+    box-shadow: 0 8px 32px #00e6e6a0;
+    border: 1px solid #00e6e6;
+}
+.timeline-date {
+    font-size: 1.08rem;
+    color: #00e6e6;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+}
+.timeline-title {
+    font-size: 1.22rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+}
+.timeline-school {
+    font-size: 1.05rem;
+    color: #b6e6e6;
+    font-style: italic;
+}
+@media (max-width: 600px) {
+    .timeline {
+        max-width: 98vw;
+    }
+    .timeline-content {
+        padding: 14px 12px;
+        font-size: 0.97rem;
+        margin-left: 54px;
+    }
+    .timeline-date, .timeline-title, .timeline-school {
+        font-size: 0.97rem;
+    }
+    .timeline-title1 {
+        font-size: 0.90rem;
+    }
+    .timeline::before {
+        left: 18px;
+        width: 4px;
+    }
+    .timeline-dot {
+        left: 6px;
+        width: 18px;
+        height: 18px;
+    }
+}
+.project-list {
+    margin-top: 24px;
+    flex-wrap: nowrap !important;
+    align-items: stretch;
+}
+.project-card-simple {
+    background: rgba(40,40,40,0.97);
+    border-radius: 16px;
+    box-shadow: 0 2px 16px #00e6e633;
+    border: 1.5px solid #222;
+    padding: 18px 12px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 320px;
+    max-width: 370px;
+    min-height: 440px;
+    height: 100%;
+    transition: box-shadow 0.3s, border-color 0.3s;
+    position: relative;
+    margin: 0 auto;
+    justify-content: flex-start;
+}
+.project-card-simple > .project-title,
+.project-card-simple > .project-desc,
+.project-card-simple > .project-stack,
+.project-card-simple > .project-features,
+.project-card-simple > .project-links,
+.project-card-simple > .project-role {
+    width: 100%;
+}
+.project-title {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 1rem;
+    color: #00e6e6;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-align: center;
+    letter-spacing: 1px;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.project-desc {
+    font-size: 0.6rem;
+    color: #fff;
+    margin-bottom: 8px;
+    text-align: start;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+}
+.project-stack {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    min-height: 28px;
+    align-items: center;
+}
+.project-stack img {
+    width: 22px;
+    height: 22px;
+    filter: drop-shadow(0 0 2px #00e6e6);
+}
+.project-features {
+    list-style: disc inside;
+    color: #b6e6e6;
+    font-size: 0.6rem;
+    margin-bottom: 8px;
+    text-align: left;
+    padding-left: 0;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.project-links {
+    margin-bottom: 6px;
+    text-align: center;
+    min-height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.project-role {
+    font-size: 0.91rem;
+    color: #fff;
+    margin-top: 2px;
+    text-align: center;
+    min-height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.project-role span {
+    color: #00e6e6;
+    font-weight: 600;
+    font-size: 0.75rem;
+}
+@media (max-width: 1200px) {
+    .project-card-simple {
+        min-height: 340px;
+        padding: 12px 4px;
+        max-width: 98vw;
+    }
+    .project-thumb {
+        max-width: 98vw;
+    }
+}
+@media (max-width: 900px) {
+    .project-list {
+        flex-wrap: wrap !important;
+    }
+    .project-card-simple {
+        min-width: 95vw;
+        max-width: 98vw;
+        margin-bottom: 18px;
+    }
+}
+@media (max-width: 600px) {
+    .project-card-simple {
+        min-width: 98vw;
+        max-width: 99vw;
+        padding: 8px 2px;
+    }
+    .project-title {
+        font-size: 0.93rem;
+        min-height: 28px;
+    }
+    .project-desc, .project-features, .project-role {
+        font-size: 0.7rem;
+    }
+    .project-features {
+        min-height: 56px;
+    }
+    .project-role {
+        min-height: 20px;
+    }
+}
     </style>
 </head>
 <body class="mode-1">
+    <div class="animated-bg"></div>
+    <!-- Particles -->
+    <div class="particle" style="width:32px;height:32px;left:10vw;top:80vh;background:#00e6e6;animation-delay:0s;"></div>
+    <div class="particle" style="width:18px;height:18px;left:70vw;top:10vh;background:#fff;animation-delay:2s;"></div>
+    <div class="particle" style="width:24px;height:24px;left:40vw;top:60vh;background:#00e6e6;animation-delay:4s;"></div>
+    <div class="particle" style="width:14px;height:14px;left:80vw;top:30vh;background:#fff;animation-delay:6s;"></div>
+    <div class="particle" style="width:20px;height:20px;left:20vw;top:20vh;background:#00e6e6;animation-delay:8s;"></div>
     <!-- Header -->
     <header class="navbar row container-fluid align-items-center justify-content-between py-2">
         <div class="col-auto d-flex align-items-center">
@@ -276,21 +601,23 @@
 
     <!-- About Me -->
     <section id="about" class="section" style="margin-top:0 !important;">
-        <div class="section-content container-fluid position-relative d-flex align-items-center" style="height: 80vh; min-height: 400px;">
-            <div class="row w-100 h-100">
-                <div class="col-md-6 d-flex flex-column justify-content-center align-items-start h-100">
-                    <div class="about-text">
-                        Step into the boundless realm of the digital landscape, where the fusion of web development prowess and graphic design ingenuity crafts immersive online journeys. With an unwavering dedication to innovation and a penchant for redefining norms, I seamlessly blend technical acumen with creative flair, infusing each project with a distinctive touch that captivates and inspires.
-                    </div>
+    <div class="section-content container-fluid position-relative " style="height: 80vh; min-height: 400px;">
+        <div class="row w-100 h-100">
+            <div class="col-md-6 d-flex flex-column justify-content-start align-items-start h-100">
+                <div class="about-text" style="position: absolute; left: -10%; top: 20%; margin: 0; width: 500px; max-width: 90vw;">
+                   Passionate about merging web development and graphic design to create engaging digital experiences.
+                    Naturally exposed to technology in the 4.0 era, I recognize its essential role in modern life.
+                    With a solid foundation in software development, design, and data synthesis, I bring both technical expertise and creativity to every project.
                 </div>
-                <div class="col-md-6 d-flex flex-column justify-content-end align-items-end position-relative h-100">
-                    <div id="website-developer-animated" class="about-title">
-                        WEBSITE<br>DEVELOPER
-                    </div>
+            </div>
+            <div class="col-md-6 d-flex flex-column justify-content-end align-items-end position-relative h-100">
+                <div id="website-developer-animated" class="about-title" style="position: absolute; top: 68%; left: 10%;">
+                    WEBSITE<br>DEVELOPER
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- My Skills -->
     <section id="skills" class="section">
@@ -309,40 +636,40 @@
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
                     <div>JavaScript</div>
                 </div>
-                <div class="skill-card">
+                <!-- <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
                     <div>React</div>
-                </div>
-                <div class="skill-card">
+                </div> -->
+                <!-- <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
                     <div>Node.js</div>
-                </div>
+                </div> -->
                 <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git">
                     <div>Git</div>
                 </div>
-                <div class="skill-card">
+                <!-- <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vite/vite-original.svg" alt="Vite">
                     <div>Vite</div>
-                </div>
-                <div class="skill-card">
+                </div> -->
+                <!-- <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript">
                     <div>TypeScript</div>
-                </div>
+                </div> -->
                 <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
                     <div>Java</div>
                 </div>
-                <div class="skill-card">
+                <!-- <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
                     <div>MongoDB</div>
-                </div>
+                </div> -->
                 <div class="skill-card">
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Server">
                     <div>SQL Server</div>
                 </div>
                 <div class="skill-card">
-                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/api/api-original.svg" alt="RESTful API">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg" alt="RESTful API">
                     <div>RESTful API</div>
                 </div>
             </div>
@@ -360,39 +687,132 @@
 
     <!-- Education -->
     <section id="education" class="section">
-        <div class="section-content container text-center">
-            <h2 class="section-title">Education</h2>
-            <p>Bachelor of Information Technology, University of Technology (2018-2022)<br>
-            Certified Frontend Developer, Udemy (2023)</p>
-        </div>
-    </section>
-
-    <!-- My Projects -->
-    <section id="projects" class="section">
-        <div class="section-content container text-center">
-            <h2 class="section-title">My Projects</h2>
-            <div class="row justify-content-center">
-                <div class="col-md-4 mb-4">
-                    <div class="project-card">
-                        <img src="assets/img/project1.jpg" alt="Project 1" style="width:100%;border-radius:12px;">
-                        <div class="mt-2">Project 01</div>
-                    </div>
+    <div class="section-content container">
+        <h2 class="section-title text-center mb-5" style="letter-spacing:3px;">Education</h2>
+        <div class="timeline mx-auto">
+            <div class="timeline-item">
+                <div class="timeline-dot">
+              
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="project-card">
-                        <img src="assets/img/project2.jpg" alt="Project 2" style="width:100%;border-radius:12px;">
-                        <div class="mt-2">Project 02</div>
-                    </div>
+                <div class="timeline-content">
+                    <div class="timeline-date">Sep 2022 – Present</div>
+                    <div class="timeline-title"><strong>Software Engineer</strong></div>
+                    <div class="timeline-school">FPT University, Da Nang</div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="project-card">
-                        <img src="assets/img/project3.jpg" alt="Project 3" style="width:100%;border-radius:12px;">
-                        <div class="mt-2">Project 03</div>
-                    </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-dot">              
+                </div>
+                <div class="timeline-content">
+                    <div class="timeline-date">2020 – Jul 2021</div>
+                    <div class="timeline-title1"><strong>Phan Chau Trinh High School</strong></div>
+                    <div class="timeline-school">Da Nang</div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+    <!-- My Projects -->
+    <section id="projects" class="section">
+    <div class="section-content1">
+        <h2 class="section-title text-center">My Projects</h2>
+        <div class="project-list row justify-content-center flex-nowrap" style="overflow-x:auto;">
+            <!-- Project 1 -->
+            <div class="col-lg-4 col-md-4 col-10 mb-4 d-flex">
+                <div class="project-card-simple flex-fill">
+                    <div class="project-title">AI-Integrated Learning Management System</div>
+                    <div class="project-desc">
+                        <span>
+                            Web platform for schools to manage courses, students, assignments.<br>
+                            <strong>AI-powered recommendations & auto grading.</strong>
+                        </span>
+                    </div>
+                    <div class="project-stack">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg" alt="RESTful API">
+                    </div>
+                    <ul class="project-features">
+                        <li>User login & session management</li>
+                        <li>Course & assignment management</li>
+                        <li>AI recommendations</li>
+                        <li>Auto grading & analytics</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/datlee27/LearningWebsite-1" target="_blank" class="btn btn-info mode-btn">GitHub</a>
+                    </div>
+                    <div class="project-role">Role: <span>Personal Project</span></div>
+                </div>
+            </div>
+            <!-- Project 2 -->
+            <div class="col-lg-4 col-md-4 col-10 mb-4 d-flex">
+                <div class="project-card-simple flex-fill">
+                    <div class="project-title">Fruit Shop Web App
+                         <br>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="project-desc">
+                        <span>
+                            Java web app with JSP/Servlet, session-based cart.<br>
+                            <strong>Product filtering, checkout, SQL Server storage.</strong>
+                        </span>
+                    </div>
+                    <div class="project-stack">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Server">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jsp/jsp-original.svg" alt="JSP">
+                    </div>
+                    <ul class="project-features">
+                        <li>User login & session management</li>
+                        <li>Add/Edit/Delete products</li>
+                        <li>Shopping cart & checkout</li>
+                        <li>Order storage in DB</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/yourusername/shopping-cart" target="_blank" class="btn btn-info mode-btn">GitHub</a>
+                    </div>
+                    <div class="project-role">Role: <span>Personal Project</span></div>
+                </div>
+            </div>
+            <!-- Project 3 -->
+            <div class="col-lg-4 col-md-4 col-10 mb-4 d-flex">
+                <div class="project-card-simple flex-fill">
+                    <div class="project-title">Portfolio Website
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <div class="project-desc">
+                        <span>
+                            Personal website to showcase skills, experience, and projects.<br>
+                            <strong>Built with HTML, CSS, Bootstrap, JS.</strong>
+                        </span>
+                    </div>
+                    <div class="project-stack">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                    </div>
+                    <ul class="project-features">
+                        <li>Responsive design</li>
+                        <li>Animated sections</li>
+                        <li>Showcase skills & projects</li>
+                       <br>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/yourusername/portfolio" target="_blank" class="btn btn-info mode-btn">GitHub</a>
+                    </div>
+                    <div class="project-role">Role: <span>Personal Project</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
     <!-- Footer -->
     <footer>
@@ -424,6 +844,11 @@
                 const rect = section.getBoundingClientRect();
                 if (rect.top < window.innerHeight - 60) {
                     section.classList.add('visible');
+                    // Animate section title
+                    const title = section.querySelector('.section-title');
+                    if (title && !title.classList.contains('animated-title')) {
+                        title.classList.add('animated-title');
+                    }
                 }
             });
         }
