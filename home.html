@@ -572,6 +572,12 @@
         min-height: 20px;
     }
 }
+@media (min-width: 992px) {
+    /* Hide the 4th project on desktop, only show first 3 */
+    .project-list .col-lg-4:nth-child(n+4) {
+        display: none !important;
+    }
+}
     </style>
 </head>
 <body class="mode-1">
@@ -716,9 +722,14 @@
     <section id="projects" class="section">
     <div class="section-content1">
         <h2 class="section-title text-center">My Projects</h2>
-        <div class="project-list row justify-content-center flex-nowrap" style="overflow-x:auto;">
+
+        <button class="carousel-control-prev" id="prevBtn">
+                <span>&lt;</span>
+            </button>
+        <div class="project-list row justify-content-center flex-wrap">
+              
             <!-- Project 1 -->
-            <div class="col-lg-4 col-md-4 col-10 mb-4 d-flex">
+            <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
                 <div class="project-card-simple flex-fill">
                     <div class="project-title">AI-Integrated Learning Management System</div>
                     <div class="project-desc">
@@ -747,10 +758,10 @@
                 </div>
             </div>
             <!-- Project 2 -->
-            <div class="col-lg-4 col-md-4 col-10 mb-4 d-flex">
+            <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
                 <div class="project-card-simple flex-fill">
                     <div class="project-title">Fruit Shop Web App
-                         <br>
+                        <br>
                         <br>
                         <br>
                     </div>
@@ -779,7 +790,7 @@
                 </div>
             </div>
             <!-- Project 3 -->
-            <div class="col-lg-4 col-md-4 col-10 mb-4 d-flex">
+            <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
                 <div class="project-card-simple flex-fill">
                     <div class="project-title">Portfolio Website
                         <br>
@@ -802,7 +813,8 @@
                         <li>Responsive design</li>
                         <li>Animated sections</li>
                         <li>Showcase skills & projects</li>
-                       <br>
+                        <br>
+
                     </ul>
                     <div class="project-links">
                         <a href="https://github.com/yourusername/portfolio" target="_blank" class="btn btn-info mode-btn">GitHub</a>
@@ -810,7 +822,41 @@
                     <div class="project-role">Role: <span>Personal Project</span></div>
                 </div>
             </div>
+            <!-- Project 4: Hotel Booking System -->
+            <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex d-lg-none">
+                <div class="project-card-simple flex-fill">
+                    <div class="project-title">Hotel Booking System</div>
+                    <div class="project-desc">
+                        <span>
+                            Simple web-based hotel room booking system for PRJ301 Workshop 2.<br>
+                            <strong>Register, login, view rooms, and make reservations.</strong>
+                        </span>
+                    </div>
+                    <div class="project-stack">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                    </div>
+                    <ul class="project-features">
+                        <li>User authentication (Register / Login / Logout)</li>
+                        <li>View available rooms</li>
+                        <li>Make a room reservation</li>
+                        <li>Manage bookings (view / cancel)</li>
+                        <li>Admin: add/edit/delete rooms</li>
+                    </ul>
+                    <div class="project-links">
+                        <a href="https://github.com/datlee27/HotelBookingSystem/tree/main" target="_blank" class="btn btn-info mode-btn">GitHub</a>
+                    </div>
+                    <div class="project-role">Role: <span>Personal Project</span></div>
+                </div>
+            </div>
+             
         </div>
+ <button class="carousel-control-next" id="nextBtn">
+                <span>&gt;</span>
+            </button>
     </div>
 </section>
 
