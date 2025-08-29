@@ -14,7 +14,8 @@ Chào mừng đến với **portfolio cá nhân** của tôi!
 ---
 
 ## 🔗 Truy cập Portfolio Online
-👉 [Xem tại đây](https://datlee27.github.io/My-portforlio/)  
+👉 [Xem tại đây](https://datlee27.github.io/DatleePortfolio/)  
+
 
 ---
 
