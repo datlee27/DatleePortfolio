@@ -7,630 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <style>
-        body.mode-1 {
-            background: #111;
-            color: #fff;
-            font-family: 'Press Start 2P', Arial, sans-serif;
-        }
-        body.mode-2 {
-            background: #f8f9fa;
-            color: #222;
-            font-family: Arial, sans-serif;
-        }
-        .navbar {
-            background: rgba(20,20,20,0.95);
-            border-bottom: 1px solid #333;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-            box-shadow: 0 2px 16px rgba(0,0,0,0.08);
-            padding: 0.5rem 0;
-        }
-        .brand {
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #00e6e6;
-            font-family: 'Press Start 2P', Arial, sans-serif;
-        }
-        .nav {
-            flex-direction: row !important;
-            gap: 0.5rem;
-        }
-        .nav-link {
-            color: inherit !important;
-            font-weight: 600;
-            font-size: 15px;
-            padding: 0.25rem 0.7rem !important;
-            position: relative;
-            transition: color 0.3s;
-        }
-        .nav-link::after {
-            content: "";
-            display: block;
-            width: 0;
-            height: 2px;
-            background: #00e6e6;
-            transition: width 0.3s;
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-        }
-        .nav-link:hover {
-            color: #00e6e6 !important;
-        }
-        .nav-link:hover::after {
-            width: 100%;
-        }
-        .nav-link.active {
-            color: #00e6e6 !important;
-            text-shadow: 0 0 6px #00e6e6;
-        }
-        .section {
-            min-height: 100vh;
-            padding: 32px 0 24px 0;
-            margin-top: 0 !important;
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(.77,0,.18,1), transform 0.8s cubic-bezier(.77,0,.18,1);
-            scroll-margin-top: 100px;
-        }
-        .section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .section-content {
-            background: transparent;
-            border-radius: 0;
-            box-shadow: none;
-            padding: 30px 24px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .section-content1 {
-            background: transparent;
-            border-radius: 0;
-            box-shadow: none;
-            padding: 20px 24px;
-            max-width: 1400px; /* Increased to accommodate all cards */
-            margin: 0 auto;
-        }
-        .animated-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: 0;
-            pointer-events: none;
-            background: linear-gradient(120deg, #00e6e6 0%, #222 100%);
-            opacity: 0.18;
-            animation: gradientMove 12s ease-in-out infinite alternate;
-        }
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 24px;
-            letter-spacing: 2px;
-            color: #00e6e6;
-            opacity: 1;
-        }
-        .section-title.animated-title {
-            animation: fadeInScale 1.2s cubic-bezier(.77,0,.18,1);
-        }
-        @keyframes fadeInScale {
-            0% { transform: scale(0.5) rotate(-8deg); opacity: 0; }
-            50% { transform: scale(1.08) rotate(2deg); opacity: 1; }
-            70% { transform: scale(0.97) rotate(-2deg);}
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 32px;
-            justify-items: center;
-            align-items: center;
-            margin-top: 32px;
-        }
-        @media (max-width: 992px) {
-            .skills-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        @media (max-width: 600px) {
-            .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 18px;
-            }
-        }
-        .skill-card {
-            background: rgba(40,40,40,0.95);
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.12), 0 0 0 #00e6e6;
-            border: 1px solid #222;
-            padding: 24px 12px;
-            min-height: 140px;
-            width: 100%;
-            max-width: 210px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: box-shadow 0.3s, border-color 0.3s;
-            position: relative;
-            overflow: hidden;
-            text-align: center;
-        }
-        .skill-card::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            border-radius: 16px;
-            border: 2px solid #00e6e6;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s;
-            z-index: 1;
-            animation: neonBorder 2.5s infinite;
-        }
-        .skill-card:hover {
-            transform: translateY(-8px) scale(1.07);
-            box-shadow: 0 6px 24px #00e6e6a0;
-            border-color: #00e6e6;
-        }
-        .skill-card:hover::before {
-            opacity: 1;
-        }
-        @keyframes neonBorder {
-            0%, 100% { opacity: 0.2; }
-            50% { opacity: 0.7; }
-        }
-        .skill-card img {
-            width: 48px;
-            height: 48px;
-            margin-bottom: 8px;
-            object-fit: contain;
-        }
-        .skill-card div {
-            font-size: 1.1rem;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            margin-top: 0;
-        }
-        .project-card {
-            background: rgba(40,40,40,0.95);
-            border-radius: 16px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-            border: 1px solid #222;
-            padding: 16px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .project-card:hover {
-            transform: translateY(-8px) scale(1.04);
-            box-shadow: 0 6px 24px #00e6e6a0;
-            border-color: #00e6e6;
-        }
-        .project-card img {
-            width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-        }
-        .particle {
-            position: fixed;
-            border-radius: 50%;
-            opacity: 0.25;
-            pointer-events: none;
-            z-index: 1;
-            animation: floatParticle 16s linear infinite;
-        }
-        @keyframes floatParticle {
-            0% { transform: translateY(0) scale(1);}
-            50% { transform: translateY(-60px) scale(1.2);}
-            100% { transform: translateY(0) scale(1);}
-        }
-        .mode-btn {
-            background: #222;
-            color: #fff;
-            border-radius: 8px;
-            border: none;
-            padding: 8px 18px;
-            font-weight: 600;
-            transition:0.3s;
-            animation: pulseBtn 2.2s infinite;
-        }
-        @keyframes pulseBtn {
-            0% { box-shadow: 0 0 0 0 #00e6e6; }
-            70% { box-shadow: 0 0 0 12px rgba(0,230,230,0); }
-            100% { box-shadow: 0 0 0 0 #00e6e6; }
-        }
-        .mode-btn:hover {
-            background: #00e6e6;
-            color: #222;
-        }
-        footer {
-            background: transparent;
-            text-align: center;
-            padding: 24px 0 12px 0;
-            font-size: 1rem;
-            color: #888;
-            border-top: 1px solid #222;
-            margin-top: 40px;
-        }
-        @media (max-width: 768px) {
-            .section-content {
-                padding: 24px 8px;
-            }
-            .section-title {
-                font-size: 1.6rem;
-            }
-            .brand {
-                font-size: 22px;
-            }
-        }
-        .profile-navbar-img {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-left: 12px;
-            border: 2px solid #00e6e6;
-            box-shadow: 0 2px 8px #0004;
-        }
-        .about-text {
-            font-size: 0.6rem;
-            line-height: 1.7;
-            color: #fff;
-            text-align: left;
-            font-weight: 400;
-            margin: 0;
-        }
-        .about-title {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 5vw;
-            line-height: 1.05;
-            color: #fff;
-            text-align: right;
-            letter-spacing: 2px;
-            font-weight: 900;
-            margin: 0;
-            white-space: pre-line;
-            text-shadow: 0 2px 16px #000, 0 0 0 #00e6e6;
-            overflow: hidden;
-            animation: neon-flicker 2.5s infinite;
-        }
-        @keyframes neon-flicker {
-            0%, 100% { color: #00e6e6; text-shadow: 0 0 8px #00e6e6, 0 2px 16px #000; }
-            10% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
-            20% { color: #00e6e6; text-shadow: 0 0 16px #00e6e6, 0 2px 16px #000; }
-            30% { color: #fff; text-shadow: 0 0 4px #00e6e6, 0 2px 16px #000; }
-            40% { color: #00e6e6; text-shadow: 0 0 12px #00e6e6, 0 2px 16px #000; }
-            50% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
-            60% { color: #00e6e6; text-shadow: 0 0 20px #00e6e6, 0 2px 16px #000; }
-            70% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
-            80% { color: #00e6e6; text-shadow: 0 0 10px #00e6e6, 0 2px 16px #000; }
-            90% { color: #fff; text-shadow: 0 0 2px #00e6e6, 0 2px 16px #000; }
-        }
-        .timeline {
-            position: relative;
-            padding: 32px 0;
-            max-width: 600px;
-        }
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 40px;
-            top: 0;
-            bottom: 0;
-            width: 6px;
-            background: linear-gradient(180deg, #00e6e6 0%, #222 100%);
-            border-radius: 3px;
-            box-shadow: 0 0 12px #00e6e6a0;
-        }
-        .timeline-item {
-            position: relative;
-            margin-bottom: 56px;
-            min-height: 80px;
-            display: flex;
-            align-items: flex-start;
-        }
-        .timeline-dot {
-            position: absolute;
-            left: 28px;
-            top: 0;
-            width: 24px;
-            height: 24px;
-            background: #222;
-            border-radius: 50%;
-            border: 3px solid #00e6e6;
-            box-shadow: 0 2px 12px #00e6e6a0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-        }
-        .timeline-icon img {
-            display: block;
-            width: 22px;
-            height: 22px;
-            filter: drop-shadow(0 0 2px #00e6e6);
-        }
-        .timeline-content {
-            margin-left: 80px;
-            background: linear-gradient(90deg, rgba(0,230,230,0.09) 0%, rgba(40,40,40,0.97) 100%);
-            border-radius: 16px;
-            padding: 22px 28px;
-            box-shadow: 0 4px 24px rgba(0,230,230,0.07);
-            color: #fff;
-            min-width: 220px;
-            position: relative;
-            transition: box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            min-height: 110px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .timeline-content:hover {
-            box-shadow: 0 8px 32px #00e6e6a0;
-            border: 1px solid #00e6e6;
-        }
-        .timeline-date {
-            font-size: 1.08rem;
-            color: #00e6e6;
-            font-weight: 600;
-            margin-bottom: 6px;
-            letter-spacing: 1px;
-        }
-        .timeline-title {
-            font-size: 1.22rem;
-            font-weight: 700;
-            margin-bottom: 2px;
-            letter-spacing: 1px;
-        }
-        .timeline-school {
-            font-size: 1.05rem;
-            color: #b6e6e6;
-            font-style: italic;
-        }
-        @media (max-width: 600px) {
-            .timeline {
-                max-width: 98vw;
-            }
-            .timeline-content {
-                padding: 14px 12px;
-                font-size: 0.97rem;
-                margin-left: 54px;
-            }
-            .timeline-date, .timeline-title, .timeline-school {
-                font-size: 0.97rem;
-            }
-            .timeline-title1 {
-                font-size: 0.90rem;
-            }
-            .timeline::before {
-                left: 18px;
-                width: 4px;
-            }
-            .timeline-dot {
-                left: 6px;
-                width: 18px;
-                height: 18px;
-            }
-        }
-        .project-list {
-            margin-top: 24px;
-            display: flex;
-            flex-wrap: nowrap;
-            justify-content: start;
-            align-items: start;
-            position: relative;
-            perspective: 1000px;
-            overflow: hidden;
-            width: 100%;
-            height: 500px; /* Adjusted height to ensure full content visibility */
-        }
-        .project-card-simple {
-            background: rgba(40,40,40,0.97);
-            border-radius: 16px;
-            box-shadow: 0 2px 16px #00e6e633;
-            border: 1.5px solid #222;
-            padding: 18px 12px 14px 12px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 320px;
-            max-width: 370px;
-            min-height: 440px;
-            height: 300px; /* Ensure full height */
-            transition: transform 0.6s ease, box-shadow 0.3s, border-color 0.3s;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%) rotateY(0deg) scale(1);
-            opacity: 0.8;
-            overflow: visible; /* Prevent content clipping */
-            margin-top: 30px;
-        }
-        .project-card-simple.active {
-            transform: translateX(-50%) rotateY(0deg) scale(1.1);
-            opacity: 1;
-            z-index: 1;
-            box-shadow: 0 6px 24px #00e6e6a0;
-            border-color: #00e6e6;
-        }
-        .project-card-simple.prev {
-            transform: translateX(-150%) rotateY(-30deg) scale(0.9);
-            opacity: 0.5;
-        }
-        .project-card-simple.next {
-            transform: translateX(50%) rotateY(30deg) scale(0.9);
-            opacity: 0.5;
-        }
-        .project-card-simple > .project-title,
-        .project-card-simple > .project-desc,
-        .project-card-simple > .project-stack,
-        .project-card-simple > .project-features,
-        .project-card-simple > .project-links,
-        .project-card-simple > .project-role {
-            width: 100%;
-        }
-        .project-title {
-            font-family: 'Press Start 2P', monospace;
-            font-size: 1rem;
-            color: #00e6e6;
-            font-weight: 700;
-            margin-bottom: 6px;
-            text-align: center;
-            letter-spacing: 1px;
-            min-height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .project-desc {
-            font-size: 0.6rem;
-            color: #fff;
-            margin-bottom: 8px;
-            text-align: start;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-        }
-        .project-stack {
-            display: flex;
-            gap: 7px;
-            margin-bottom: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-            min-height: 28px;
-            align-items: center;
-        }
-        .project-stack img {
-            width: 22px;
-            height: 22px;
-            filter: drop-shadow(0 0 2px #00e6e6);
-        }
-        .project-features {
-            list-style: disc inside;
-            color: #b6e6e6;
-            font-size: 0.6rem;
-            margin-bottom: 8px;
-            text-align: left;
-            padding-left: 0;
-            min-height: 70px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-        }
-        .project-links {
-            margin-bottom: 6px;
-            text-align: center;
-            min-height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .project-role {
-            font-size: 0.91rem;
-            color: #fff;
-            margin-top: 2px;
-            text-align: center;
-            min-height: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .project-role span {
-            color: #00e6e6;
-            font-weight: 600;
-            font-size: 0.75rem;
-        }
-        @media (max-width: 1200px) {
-            .project-card-simple {
-                height: 300px; /* Increased to ensure full content */
-                padding: 12px 4px;
-                
-            }
-            .project-thumb {
-                max-width: 98vw;
-            }
-        }
-        @media (max-width: 900px) {
-            .project-list {
-                flex-wrap: wrap !important;
-                height: auto; /* Allow height to adjust */
-                perspective: none;
-            }
-            .project-card-simple {
-                min-width: 95vw;
-                max-width: 98vw;
-                margin-bottom: 18px;
-                position: relative;
-                transform: none;
-                left: 0;
-                opacity: 1;
-                height: auto; /* Ensure full height */
-            }
-            .project-card-simple.active,
-            .project-card-simple.prev,
-            .project-card-simple.next {
-                transform: none;
-                scale: 1;
-                opacity: 1;
-            }
-        }
-        @media (max-width: 600px) {
-            .project-card-simple {
-                min-width: 98vw;
-                max-width: 99vw;
-                padding: 8px 2px;
-            }
-            .project-title {
-                font-size: 0.93rem;
-                min-height: 28px;
-            }
-            .project-desc, .project-features, .project-role {
-                font-size: 0.7rem;
-            }
-            .project-features {
-                min-height: 56px;
-            }
-            .project-role {
-                min-height: 20px;
-            }
-        }
-        .carousel-control-prev, .carousel-control-next {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 230, 230, 0.2);
-            border: none;
-            color: #00e6e6;
-            font-size: 24px;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            z-index: 10;
-            transition:  0.3s;
-        }
-        .carousel-control-prev:hover, .carousel-control-next:hover {
-            background: rgba(0, 230, 230, 0.4);
-        }
-        .carousel-control-prev {
-            left: 10px;
-        }
-        .carousel-control-next {
-            right: 10px;
-        }
-    </style>
 </head>
 <body class="mode-1">
     <div class="animated-bg"></div>
@@ -656,23 +32,23 @@
     </header>
 
     <section id="about" class="section" style="margin-top:0 !important;">
-    <div class="section-content container-fluid position-relative " style="height: 80vh; min-height: 400px;">
-        <div class="row w-100 h-100">
-            <div class="col-md-6 d-flex flex-column justify-content-start align-items-start h-100">
-                <div class="about-text" style="position: absolute; left: -10%; top: 20%; margin: 0; width: 500px; max-width: 90vw;">
-                   Passionate about merging web development and graphic design to create engaging digital experiences.
-                    Naturally exposed to technology in the 4.0 era, I recognize its essential role in modern life.
-                    With a solid foundation in software development, design, and data synthesis, I bring both technical expertise and creativity to every project.
+        <div class="section-content container-fluid position-relative" style="height: 80vh; min-height: 400px;">
+            <div class="row w-100 h-100">
+                <div class="col-md-6 d-flex flex-column justify-content-start align-items-start h-100">
+                    <div class="about-text" style="position: absolute; left: -10%; top: 20%; margin: 0; width: 500px; max-width: 90vw;">
+                        Passionate about merging web development and graphic design to create engaging digital experiences.
+                        Naturally exposed to technology in the 4.0 era, I recognize its essential role in modern life.
+                        With a solid foundation in software development, design, and data synthesis, I bring both technical expertise and creativity to every project.
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6 d-flex flex-column justify-content-end align-items-end position-relative h-100">
-                <div id="website-developer-animated" class="about-title" style="position: absolute; top: 68%; left: 10%;">
-                    WEBSITE<br>DEVELOPER
+                <div class="col-md-6 d-flex flex-column justify-content-end align-items-end position-relative h-100">
+                    <div id="website-developer-animated" class="about-title" style="position: absolute; top: 68%; left: 10%;">
+                        WEBSITE<br>DEVELOPER
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section id="skills" class="section">
         <div class="section-content container text-center">
@@ -706,6 +82,10 @@
                     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg" alt="RESTful API">
                     <div>RESTful API</div>
                 </div>
+                <div class="skill-card">
+                    <img src="assets/img/jsp_2.png" alt="JSP">
+                    <div>JSP</div>
+                </div>
             </div>
         </div>
     </section>
@@ -719,260 +99,160 @@
     </section>
 
     <section id="education" class="section">
-    <div class="section-content container">
-        <h2 class="section-title text-center mb-5" style="letter-spacing:3px;">Education</h2>
-        <div class="timeline mx-auto">
-            <div class="timeline-item">
-                <div class="timeline-dot">
+        <div class="section-content container">
+            <h2 class="section-title text-center mb-5" style="letter-spacing:3px;">Education</h2>
+            <div class="timeline mx-auto">
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Sep 2022 – Present</div>
+                        <div class="timeline-title"><strong>Software Engineer</strong></div>
+                        <div class="timeline-school">FPT University, Da Nang</div>
+                    </div>
                 </div>
-                <div class="timeline-content">
-                    <div class="timeline-date">Sep 2022 – Present</div>
-                    <div class="timeline-title"><strong>Software Engineer</strong></div>
-                    <div class="timeline-school">FPT University, Da Nang</div>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-dot">              
-                </div>
-                <div class="timeline-content">
-                    <div class="timeline-date">2020 – Jul 2021</div>
-                    <div class="timeline-title1"><strong>Phan Chau Trinh High School</strong></div>
-                    <div class="timeline-school">Da Nang</div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">              
+                    </div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020 – Jul 2021</div>
+                        <div class="timeline-title1"><strong>Phan Chau Trinh High School</strong></div>
+                        <div class="timeline-school">Da Nang</div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section id="projects" class="section">
-    <div class="section-content1">
-        <h2 class="section-title text-center">My Projects</h2>
-
-        <button class="carousel-control-prev" id="prevBtn">
-            <span>&lt;</span>
-        </button>
-        <div class="project-list" id="projectCarousel">
-            <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
-                <div class="project-card-simple flex-fill">
-                    <div class="project-title">AI-Integrated Learning Management System</div>
-                    <div class="project-desc">
-                        <span>
-                            Web platform for schools to manage courses, students, assignments.<br>
-                            <strong>AI-powered recommendations & auto grading.</strong>
-                        </span>
+        <div class="section-content1">
+            <h2 class="section-title text-center">My Projects</h2>
+            <button class="carousel-control-prev" id="prevBtn">
+                <span>&lt;</span>
+            </button>
+            <div class="project-list" id="projectCarousel">
+                <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
+                    <div class="project-card-simple flex-fill">
+                        <div class="project-title">AI-Integrated Learning Management System</div>
+                        <div class="project-desc">
+                            <span>
+                                Web platform for schools to manage courses, students, assignments.<br>
+                                <strong>AI-powered recommendations & auto grading.</strong>
+                            </span>
+                        </div>
+                        <div class="project-stack">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg" alt="RESTful API">
+                        </div>
+                        <ul class="project-features">
+                            <li>User login & session management</li>
+                            <li>Course & assignment management</li>
+                            <li>AI recommendations</li>
+                            <li>Auto grading & analytics</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/datlee27/LearningWebsite-1" target="_blank" class="btn btn-info mode-btn" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                        <div class="project-role">Role: <span>Personal Project</span></div>
                     </div>
-                    <div class="project-stack">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/swagger/swagger-original.svg" alt="RESTful API">
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
+                    <div class="project-card-simple flex-fill">
+                        <div class="project-title">Fruit Shop Web App</div>
+                        <div class="project-desc">
+                            <span>
+                                Java web app with JSP/Servlet, session-based cart.<br>
+                                <strong>Product filtering, checkout, SQL Server storage.</strong>
+                            </span>
+                        </div>
+                        <div class="project-stack">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Server">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                            <img src="assets/img/jsp.png" alt="JSP">
+                        </div>
+                        <ul class="project-features">
+                            <li>User login & session management</li>
+                            <li>Add/Edit/Delete products</li>
+                            <li>Shopping cart & checkout</li>
+                            <li>Order storage in DB</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/datlee27/FruitShopOnline" target="_blank" class="btn btn-info mode-btn" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                        <div class="project-role">Role: <span>Personal Project</span></div>
                     </div>
-                    <ul class="project-features">
-                        <li>User login & session management</li>
-                        <li>Course & assignment management</li>
-                        <li>AI recommendations</li>
-                        <li>Auto grading & analytics</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/datlee27/LearningWebsite-1" target="_blank" class="btn btn-info mode-btn">GitHub</a>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
+                    <div class="project-card-simple flex-fill">
+                        <div class="project-title">Portfolio Website</div>
+                        <div class="project-desc">
+                            <span>
+                                Personal website to showcase skills, experience, and projects.<br>
+                                <strong>Built with HTML, CSS, Bootstrap, JS.</strong>
+                            </span>
+                        </div>
+                        <div class="project-stack">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                        </div>
+                        <ul class="project-features">
+                            <li>Responsive design</li>
+                            <li>Animated sections</li>
+                            <li>Showcase skills & projects</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/datlee27/My-portforlio" target="_blank" class="btn btn-info mode-btn" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                        <div class="project-role">Role: <span>Personal Project</span></div>
                     </div>
-                    <div class="project-role">Role: <span>Personal Project</span></div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
+                    <div class="project-card-simple flex-fill">
+                        <div class="project-title">Hotel Booking System</div>
+                        <div class="project-desc">
+                            <span>
+                                Simple web-based hotel room booking system for PRJ301 Workshop 2.<br>
+                                <strong>Register, login, view rooms, and make reservations.</strong>
+                            </span>
+                        </div>
+                        <div class="project-stack">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                        </div>
+                        <ul class="project-features">
+                            <li>User authentication (Register / Login / Logout)</li>
+                            <li>View available rooms</li>
+                            <li>Make a room reservation</li>
+                            <li>Manage bookings (view / cancel)</li>
+                            <li>Admin: add/edit/delete rooms</li>
+                        </ul>
+                        <div class="project-links">
+                            <a href="https://github.com/datlee27/HotelBookingSystem" target="_blank" class="btn btn-info mode-btn" rel="noopener noreferrer">GitHub</a>
+                        </div>
+                        <div class="project-role">Role: <span>Personal Project</span></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
-                <div class="project-card-simple flex-fill">
-                    <div class="project-title">Fruit Shop Web App</div>
-                    <div class="project-desc">
-                        <span>
-                            Java web app with JSP/Servlet, session-based cart.<br>
-                            <strong>Product filtering, checkout, SQL Server storage.</strong>
-                        </span>
-                    </div>
-                    <div class="project-stack">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="SQL Server">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jsp/jsp-original.svg" alt="JSP">
-                    </div>
-                    <ul class="project-features">
-                        <li>User login & session management</li>
-                        <li>Add/Edit/Delete products</li>
-                        <li>Shopping cart & checkout</li>
-                        <li>Order storage in DB</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/datlee27/FruitShopOnline" target="_blank" class="btn btn-info mode-btn">GitHub</a>
-                    </div>
-                    <div class="project-role">Role: <span>Personal Project</span></div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
-                <div class="project-card-simple flex-fill">
-                    <div class="project-title">Portfolio Website</div>
-                    <div class="project-desc">
-                        <span>
-                            Personal website to showcase skills, experience, and projects.<br>
-                            <strong>Built with HTML, CSS, Bootstrap, JS.</strong>
-                        </span>
-                    </div>
-                    <div class="project-stack">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
-                    </div>
-                    <ul class="project-features">
-                        <li>Responsive design</li>
-                        <li>Animated sections</li>
-                        <li>Showcase skills & projects</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/datlee27/My-portforlio" target="_blank" class="btn btn-info mode-btn">GitHub</a>
-                    </div>
-                    <div class="project-role">Role: <span>Personal Project</span></div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-12 mb-4 d-flex">
-                <div class="project-card-simple flex-fill">
-                    <div class="project-title">Hotel Booking System</div>
-                    <div class="project-desc">
-                        <span>
-                            Simple web-based hotel room booking system for PRJ301 Workshop 2.<br>
-                            <strong>Register, login, view rooms, and make reservations.</strong>
-                        </span>
-                    </div>
-                    <div class="project-stack">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
-                    </div>
-                    <ul class="project-features">
-                        <li>User authentication (Register / Login / Logout)</li>
-                        <li>View available rooms</li>
-                        <li>Make a room reservation</li>
-                        <li>Manage bookings (view / cancel)</li>
-                        <li>Admin: add/edit/delete rooms</li>
-                    </ul>
-                    <div class="project-links">
-                        <a href="https://github.com/datlee27/HotelBookingSystem" target="_blank" class="btn btn-info mode-btn">GitHub</a>
-                    </div>
-                    <div class="project-role">Role: <span>Personal Project</span></div>
-                </div>
-            </div>
+            <button class="carousel-control-next" id="nextBtn">
+                <span>&gt;</span>
+            </button>
         </div>
-        <button class="carousel-control-next" id="nextBtn">
-            <span>&gt;</span>
-        </button>
-    </div>
-</section>
+    </section>
 
     <footer>
         <p>&copy; 2025 My Portfolio</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                const href = this.getAttribute('href');
-                if (href.startsWith('#')) {
-                    e.preventDefault();
-                    const target = document.querySelector(href);
-                    if (target) {
-                        const navbar = document.querySelector('.navbar');
-                        const navHeight = navbar ? navbar.offsetHeight : 0;
-                        const top = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 6;
-                        window.scrollTo({ top, behavior: 'smooth' });
-                    }
-                }
-            });
-        });
-
-        function revealSections() {
-            document.querySelectorAll('.section').forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top < window.innerHeight - 60) {
-                    section.classList.add('visible');
-                    const title = section.querySelector('.section-title');
-                    if (title && !title.classList.contains('animated-title')) {
-                        title.classList.add('animated-title');
-                    }
-                }
-            });
-        }
-        window.addEventListener('scroll', revealSections);
-        window.addEventListener('DOMContentLoaded', revealSections);
-
-        function setActiveNav() {
-            const sections = document.querySelectorAll('.section');
-            let currentId = '';
-            const scrollY = window.scrollY + (document.querySelector('.navbar')?.offsetHeight || 0) + 10;
-            sections.forEach(section => {
-                if (section.offsetTop <= scrollY) {
-                    currentId = section.id;
-                }
-            });
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === '#' + currentId) {
-                    link.classList.add('active');
-                }
-            });
-        }
-        window.addEventListener('scroll', setActiveNav);
-        window.addEventListener('DOMContentLoaded', setActiveNav);
-
-        window.addEventListener('DOMContentLoaded', function() {
-            const aboutSection = document.getElementById('about');
-            if (aboutSection) {
-                const navbar = document.querySelector('.navbar');
-                const navHeight = navbar ? navbar.offsetHeight : 0;
-                const top = aboutSection.getBoundingClientRect().top + window.pageYOffset - navHeight - 6;
-                window.scrollTo({ top, behavior: 'auto' });
-            }
-            revealSections();
-            setActiveNav();
-        });
-
-        setTimeout(() => {
-            revealSections();
-            setActiveNav();
-        }, 300);
-
-        // Carousel Logic for Projects
-        const projectList = document.getElementById('projectCarousel');
-        const projectCards = projectList.querySelectorAll('.project-card-simple');
-        let currentIndex = 0;
-
-        function updateCarousel() {
-            projectCards.forEach((card, index) => {
-                card.classList.remove('active', 'prev', 'next');
-                if (index === currentIndex) {
-                    card.classList.add('active');
-                } else if (index === (currentIndex - 1 + projectCards.length) % projectCards.length) {
-                    card.classList.add('prev');
-                } else if (index === (currentIndex + 1) % projectCards.length) {
-                    card.classList.add('next');
-                }
-                card.style.zIndex = index === currentIndex ? 1 : 0;
-            });
-        }
-
-        document.getElementById('prevBtn').addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + projectCards.length) % projectCards.length;
-            updateCarousel();
-        });
-
-        document.getElementById('nextBtn').addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % projectCards.length;
-            updateCarousel();
-        });
-
-        // Initialize carousel
-        updateCarousel();
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>
