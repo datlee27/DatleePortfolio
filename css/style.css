@@ -269,6 +269,7 @@ footer {
     border-radius: 50%;
     object-fit: cover;
     margin-left: 12px;
+    cursor: pointer;
     border: 2px solid #00e6e6;
     box-shadow: 0 2px 8px #0004;
 }
@@ -458,10 +459,12 @@ footer {
 .project-card-simple.prev {
     transform: translateX(-150%) rotateY(-30deg) scale(0.9);
     opacity: 0.5;
+    cursor: pointer;
 }
 .project-card-simple.next {
     transform: translateX(50%) rotateY(30deg) scale(0.9);
     opacity: 0.5;
+    cursor: pointer;
 }
 .project-card-simple > .project-title,
 .project-card-simple > .project-desc,
@@ -618,4 +621,67 @@ footer {
 }
 .carousel-control-next {
     right: 10px;
+}
+
+/* --- Chatbot Animation --- */
+#chatbase-bubble-button {
+    /* Áp dụng animation tỏa sáng */
+    animation: chatbot-pulse 2.5s infinite cubic-bezier(0.66, 0, 0, 1);
+    box-shadow: 0 0 0 0 rgba(0, 230, 230, 0.7);
+    transition: transform 0.3s ease-in-out;
+}
+
+#chatbase-bubble-button:hover {
+    /* Phóng to nhẹ khi di chuột qua và tạm dừng animation */
+    transform: scale(1.1);
+    animation-play-state: paused;
+}
+
+@keyframes chatbot-pulse {
+    70% { box-shadow: 0 0 0 20px rgba(0, 230, 230, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 230, 230, 0); }
+}
+
+/* --- Chatbot Window Size --- */
+/* Giảm kích thước cửa sổ chat để nhỏ gọn hơn */
+#chatbase-bubble-window {
+    max-width: 350px !important; /* Giảm chiều rộng tối đa */
+    max-height: 80vh !important; /* Giới hạn chiều cao theo khung nhìn */
+    height: 550px !important; /* Giảm chiều cao mặc định */
+}
+
+/* --- Profile Dropdown --- */
+.navbar .dropdown-menu {
+    background: rgba(20, 20, 20, 0.95);
+    border: 1px solid #00e6e6;
+    box-shadow: 0 4px 24px #00e6e655;
+    border-radius: 8px;
+    margin-top: 12px !important;
+}
+
+.navbar .dropdown-item {
+    color: #fff; /* Màu chữ mặc định */
+    font-family: Arial, sans-serif; /* Giữ font Arial để dễ đọc */
+    font-weight: 600; /* Chữ đậm hơn */
+    transition: background-color 0.3s, color 0.3s, text-shadow 0.3s;
+    text-shadow: 0 0 4px rgba(0, 230, 230, 0.4); /* Hiệu ứng phát sáng nhẹ */
+    padding: 10px 15px; /* Điều chỉnh padding */
+    display: flex; /* Để căn chỉnh icon và text */
+    align-items: center;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: #00e6e6;
+    color: #111;
+    text-shadow: none; /* Bỏ hiệu ứng phát sáng khi hover để tăng độ tương phản */
+}
+
+.navbar .dropdown-item i {
+    font-size: 1.1em; /* Kích thước icon lớn hơn một chút */
+    color: #00e6e6; /* Màu neon cho icon */
+    transition: color 0.3s;
+}
+
+.navbar .dropdown-item:hover i {
+    color: #111; /* Đổi màu icon khi hover */
 }

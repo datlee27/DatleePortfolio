@@ -84,6 +84,20 @@ function updateCarousel() {
     });
 }
 
+function setupCarouselClick() {
+    projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+            if (card.classList.contains('prev')) {
+                currentIndex = (currentIndex - 1 + projectCards.length) % projectCards.length;
+                updateCarousel();
+            } else if (card.classList.contains('next')) {
+                currentIndex = (currentIndex + 1) % projectCards.length;
+                updateCarousel();
+            }
+        });
+    });
+}
+
 document.getElementById('prevBtn').addEventListener('click', () => {
     currentIndex = (currentIndex - 1 + projectCards.length) % projectCards.length;
     updateCarousel();
@@ -96,3 +110,4 @@ document.getElementById('nextBtn').addEventListener('click', () => {
 
 // Initialize carousel
 updateCarousel();
+setupCarouselClick();

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
@@ -18,7 +19,14 @@
     <header class="navbar row container-fluid align-items-center justify-content-between py-2">
         <div class="col-auto d-flex align-items-center">
             <span class="brand px-3">Datdoc</span>
-            <img src="assets/img/profile.PNG" alt="Profile" class="profile-navbar-img" />
+            <div class="dropdown">
+                <img src="assets/img/profile.PNG" alt="Profile" class="profile-navbar-img dropdown-toggle" id="contactDropdown" data-bs-toggle="dropdown" aria-expanded="false" />
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="contactDropdown">
+                    <li><a class="dropdown-item" href="https://github.com/datlee27" target="_blank" rel="noopener noreferrer"><i class="fab fa-github me-2"></i>GitHub</a></li>
+                    <li><a class="dropdown-item" href="mailto:lvd27012004@gmail.com"><i class="fas fa-envelope me-2"></i>Gmail</a></li>
+                    <li><a class="dropdown-item" href="https://www.facebook.com/le.van.at.760768" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook me-2"></i>Facebook</a></li>
+                </ul>
+            </div>
         </div>
         <div class="col-auto d-flex align-items-center">
             <ul class="nav flex-row justify-content-end align-items-center mb-0">
@@ -254,5 +262,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/script.js"></script>
+    <script>
+    (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="c9zgwCRkU8lje3AUpu6-j";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+    </script>
 </body>
 </html>
