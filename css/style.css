@@ -30,6 +30,10 @@ body.mode-2 {
     flex-direction: row !important;
     gap: 0.5rem;
 }
+.navbar-nav {
+    gap: 0.5rem;
+    text-align: center;
+}
 .nav-link {
     color: inherit !important;
     font-weight: 600;
@@ -125,17 +129,6 @@ body.mode-2 {
     justify-items: center;
     align-items: center;
     margin-top: 32px;
-}
-@media (max-width: 992px) {
-    .skills-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-@media (max-width: 600px) {
-    .skills-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
-    }
 }
 .skill-card {
     background: rgba(40,40,40,0.95);
@@ -252,17 +245,6 @@ footer {
     border-top: 1px solid #222;
     margin-top: 40px;
 }
-@media (max-width: 768px) {
-    .section-content {
-        padding: 24px 8px;
-    }
-    .section-title {
-        font-size: 1.6rem;
-    }
-    .brand {
-        font-size: 22px;
-    }
-}
 .profile-navbar-img {
     width: 38px;
     height: 38px;
@@ -275,11 +257,14 @@ footer {
 }
 .about-text {
     font-size: 0.6rem;
-    line-height: 1.7;
+    padding : 68px 68px 0 68px;
+
+    line-height: 2.3;
     color: #fff;
-    text-align: left;
+    text-align: justify;
     font-weight: 400;
-    margin: 0;
+
+    max-width: 48%;
 }
 .about-title {
     font-family: 'Press Start 2P', monospace;
@@ -291,7 +276,9 @@ footer {
     font-weight: 900;
     margin: 0;
     white-space: pre-line;
-    text-shadow: 0 2px 16px #000, 0 0 0 #00e6e6;
+    text-shadow:
+        0 2px 16px #000,
+        0 0 0 #00e6e6;
     overflow: hidden;
     animation: neon-flicker 2.5s infinite;
 }
@@ -391,31 +378,6 @@ footer {
     color: #b6e6e6;
     font-style: italic;
 }
-@media (max-width: 600px) {
-    .timeline {
-        max-width: 98vw;
-    }
-    .timeline-content {
-        padding: 14px 12px;
-        font-size: 0.97rem;
-        margin-left: 54px;
-    }
-    .timeline-date, .timeline-title, .timeline-school {
-        font-size: 0.97rem;
-    }
-    .timeline-title1 {
-        font-size: 0.90rem;
-    }
-    .timeline::before {
-        left: 18px;
-        width: 4px;
-    }
-    .timeline-dot {
-        left: 6px;
-        width: 18px;
-        height: 18px;
-    }
-}
 .project-list {
     margin-top: 24px;
     display: flex;
@@ -440,7 +402,6 @@ footer {
     min-width: 320px;
     max-width: 370px;
     min-height: 440px;
-    height: 300px;
     transition: transform 0.6s ease, box-shadow 0.3s, border-color 0.3s;
     position: absolute;
     left: 50%;
@@ -545,59 +506,6 @@ footer {
     font-weight: 600;
     font-size: 0.75rem;
 }
-@media (max-width: 1200px) {
-    .project-card-simple {
-        height: 300px;
-        padding: 12px 4px;
-    }
-    .project-thumb {
-        max-width: 98vw;
-    }
-}
-@media (max-width: 900px) {
-    .project-list {
-        flex-wrap: wrap !important;
-        height: auto;
-        perspective: none;
-    }
-    .project-card-simple {
-        min-width: 95vw;
-        max-width: 98vw;
-        margin-bottom: 18px;
-        position: relative;
-        transform: none;
-        left: 0;
-        opacity: 1;
-        height: auto;
-    }
-    .project-card-simple.active,
-    .project-card-simple.prev,
-    .project-card-simple.next {
-        transform: none;
-        scale: 1;
-        opacity: 1;
-    }
-}
-@media (max-width: 600px) {
-    .project-card-simple {
-        min-width: 98vw;
-        max-width: 99vw;
-        padding: 8px 2px;
-    }
-    .project-title {
-        font-size: 0.93rem;
-        min-height: 28px;
-    }
-    .project-desc, .project-features, .project-role {
-        font-size: 0.7rem;
-    }
-    .project-features {
-        min-height: 56px;
-    }
-    .project-role {
-        min-height: 20px;
-    }
-}
 .carousel-control-prev, .carousel-control-next {
     position: absolute;
     top: 50%;
@@ -621,6 +529,163 @@ footer {
 }
 .carousel-control-next {
     right: 10px;
+}
+
+/* =================================
+   RESPONSIVE STYLES
+   ================================= */
+
+/* --- Navbar Toggler Icon --- */
+.navbar-toggler {
+    border-color: rgba(0, 230, 230, 0.5);
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 230, 230, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* --- About Section --- */
+.section-about {
+    display: flex;
+    align-items: center;
+    min-height: 90vh;
+}
+
+/* ===================================================================
+   1. Large devices (Desktops, < 1200px)
+   =================================================================== */
+@media (max-width: 1199.98px) {
+    .project-card-simple {
+        min-width: 300px; /* Giảm nhẹ kích thước */
+        max-width: 350px;
+        min-height: 430px; /* Điều chỉnh min-height thay vì height cố định */
+    }
+    .project-thumb {
+        max-width: 98vw;
+    }
+}
+
+/* ===================================================================
+   2. Medium devices (Tablets, < 992px)
+   =================================================================== */
+@media (max-width: 991.98px) {
+    /* --- General Section Layout --- */
+    .section-about {
+        min-height: auto;
+        padding-top: 5rem;
+        padding-bottom: 5rem;
+        text-align: center;
+    }
+    
+    /* --- About Section --- */
+    .about-text {
+        max-width: 70%;
+        padding: 20px;
+        margin: 0 auto; /* Căn giữa trên tablet */
+    }
+    .about-title {
+        text-align: center;
+        font-size: 10vw;
+    }
+
+    /* --- Skills Section --- */
+    .skills-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* --- Project Carousel --- */
+    .project-list {
+        height: 470px; /* Giảm chiều cao carousel */
+    }
+    .project-card-simple {
+        min-width: 280px;
+        max-width: 320px;
+        min-height: 420px;
+        padding: 14px 10px; /* Giảm padding thẻ */
+    }
+    .project-title {
+        font-size: 0.9rem; /* Giảm font tiêu đề */
+    }
+    .project-desc, .project-features {
+        font-size: 0.6rem; /* Giảm font mô tả */
+    }
+    .project-card-simple.prev {
+        transform: translateX(-130%) rotateY(-25deg) scale(0.85); /* Điều chỉnh vị trí */
+    }
+    .project-card-simple.next {
+        transform: translateX(30%) rotateY(25deg) scale(0.85); /* Điều chỉnh vị trí */
+    }
+}
+
+/* ===================================================================
+   3. Small devices (Landscape Phones, < 768px)
+   =================================================================== */
+@media (max-width: 767.98px) {
+    .brand {
+        font-size: 22px;
+    }
+    .section-title {
+        font-size: 1.6rem;
+    }
+    .section-content {
+        padding: 24px 8px;
+    }
+
+    /* --- Project Carousel --- */
+    .project-list {
+        height: 452px; /* Giảm chiều cao hơn nữa */
+    }
+    .project-card-simple {
+        min-width: 260px; /* Thu nhỏ thẻ hơn nữa */
+        max-width: 280px;
+        min-height: 390px;
+        padding: 12px 8px;
+    }
+    .project-title {
+        font-size: 0.7rem;
+        min-height: 32px;
+    }
+    .project-desc, .project-features, .project-role, .project-role span {
+        font-size: 0.5rem;
+    }
+
+}
+
+/* ===================================================================
+   4. Extra small devices (Portrait Phones, < 600px)
+   =================================================================== */
+@media (max-width: 599.98px) {
+
+    /* --- Skills Section --- */
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+    }
+
+    /* --- Timeline Section --- */
+    .timeline { max-width: 98vw; }
+    .timeline::before { left: 18px; width: 4px; }
+    .timeline-dot { left: 6px; width: 18px; height: 18px; }
+    .timeline-content { padding: 14px 12px; font-size: 0.97rem; margin-left: 54px; }
+    .timeline-date, .timeline-title, .timeline-school { font-size: 0.97rem; }
+    .timeline-title1 { font-size: 0.90rem; }
+    
+    /* --- Project Carousel --- */
+    .project-list {
+        height: 452px; /* Chiều cao cho màn hình nhỏ nhất */
+    }
+    .project-card-simple {
+        min-width: 240px; /* Kích thước nhỏ nhất cho thẻ */
+        max-width: 260px;
+        min-height: 370px;
+
+    }
+    .project-title {
+        font-size: 0.6rem;
+    }
+    .project-desc, .project-features, .project-role, .project-role span {
+        font-size: 0.4rem; /* Font nhỏ nhất có thể đọc */
+    }
+    .project-features { min-height: 60px; }
 }
 
 /* --- Chatbot Animation --- */
