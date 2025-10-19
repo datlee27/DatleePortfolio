@@ -2,11 +2,13 @@ body.mode-1 {
     background: #111;
     color: #fff;
     font-family: 'Press Start 2P', Arial, sans-serif;
+    overflow-x: hidden;
 }
 body.mode-2 {
     background: #f8f9fa;
     color: #222;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
 }
 .navbar {
     background: rgba(20,20,20,0.95);
@@ -91,10 +93,11 @@ body.mode-2 {
     padding: 1px 24px;
     max-width: 1400px;
     margin: 0 auto;
+    overflow-x: hidden; /* Ngăn carousel tràn ra ngoài */
 }
 .animated-bg {
     position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
+    top: 0; left: 0; width: 100%; height: 100vh; /* Thay vw bằng % để tránh tràn */
     z-index: 0;
     pointer-events: none;
     background: linear-gradient(120deg, #00e6e6 0%, #222 100%);
@@ -274,7 +277,7 @@ footer {
     text-align: right;
     letter-spacing: 2px;
     font-weight: 900;
-    margin: 0;
+    margin-right: 20px;
     white-space: pre-line;
     text-shadow:
         0 2px 16px #000,
@@ -690,21 +693,34 @@ footer {
 
 /* --- Chatbot Animation --- */
 #chatbase-bubble-button {
-    /* Áp dụng animation tỏa sáng */
-    animation: chatbot-pulse 2.5s infinite cubic-bezier(0.66, 0, 0, 1);
-    box-shadow: 0 0 0 0 rgba(0, 230, 230, 0.7);
+    position: relative; /* Cần thiết cho pseudo-element */
     transition: transform 0.3s ease-in-out;
+}
+
+/* Tạo hiệu ứng pulse bằng pseudo-element để tối ưu hiệu năng */
+#chatbase-bubble-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* Giả sử nút của bạn hình tròn */
+    background-color: #00e6e6;
+    animation: chatbot-pulse-optimized 2.5s infinite cubic-bezier(0.66, 0, 0, 1);
+    z-index: -1; /* Đặt phía sau nút thật */
 }
 
 #chatbase-bubble-button:hover {
     /* Phóng to nhẹ khi di chuột qua và tạm dừng animation */
     transform: scale(1.1);
-    animation-play-state: paused;
 }
 
-@keyframes chatbot-pulse {
-    70% { box-shadow: 0 0 0 20px rgba(0, 230, 230, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 230, 230, 0); }
+@keyframes chatbot-pulse-optimized {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
 }
 
 /* --- Chatbot Window Size --- */
@@ -750,3 +766,14 @@ footer {
 .navbar .dropdown-item:hover i {
     color: #111; /* Đổi màu icon khi hover */
 }
+
+/* =================================
+   Dropdown on Hover
+   ================================= */
+/* Hiển thị dropdown menu khi di chuột qua phần tử cha (.dropdown) */
+.navbar .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* (Tùy chọn) Ẩn mũi tên mặc định của dropdown nếu bạn không cần */
+.navbar .dropdown-toggle::after { display: none; }
